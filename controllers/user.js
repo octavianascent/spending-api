@@ -10,8 +10,7 @@ exports.index = (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  const password = req.body.password;
-  const email = req.body.email;
+  const { password, email } = req.body;
 
   const user = await User.findOne({
     where:{ email: email }
@@ -36,13 +35,12 @@ exports.login = async (req, res, next) => {
 };
 
 exports.registerUser = async (req, res, next) => {
-  const password = req.body.password;
-  const email = req.body.email;
+  const { password, email} = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 12);
   try {
-    await User.create({ email: email, password: hashedPassword});
+    await User.create({ email: email, password: password});
   } catch (err) {
+    console.log(err);
     return res.status(401).json({error: true, message: 'An error occurred'})
   }
 

@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define('user', {
     id: {
@@ -28,6 +30,10 @@ module.exports = (sequelize, Sequelize) => {
       as: 'spendingItems'
     });
   };
+
+  User.addHook('beforeCreate', (user) => {
+    user.password = bcrypt.hashSync(user.password, 12);
+  });
 
   return User;
 };
