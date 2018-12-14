@@ -37,10 +37,13 @@ exports.login = async (req, res, next) => {
 exports.registerUser = async (req, res, next) => {
   const { password, email} = req.body;
 
+  console.log('intra');
+  console.log(req.body);
+  console.log(req.params);
+
   try {
     await User.create({ email: email, password: password});
   } catch (err) {
-    console.log(err);
     return res.status(401).json({error: true, message: 'An error occurred'})
   }
 

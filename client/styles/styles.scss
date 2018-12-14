@@ -1,0 +1,9 @@
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+.header {
+  a:first-child {
+    border-right: 1px solid #000;
+    margin-right: 5px;
+    padding-right: 5px;
+  }
+}
