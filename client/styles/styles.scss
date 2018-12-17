@@ -7,3 +7,12 @@
     padding-right: 5px;
   }
 }
+
+.logo {
+  color: #000;
+  font-size: 1.15rem;
+  &:hover {
+    color: #000;
+    text-decoration: none;
+  }
+}

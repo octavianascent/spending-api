@@ -1,3 +1,6 @@
+import Layout from '../components/common/layout'
+import SignForm from '../components/user/sign-form';
+import PageTitle from "../components/common/pageTitle";
 
 const newUser = {
   email: '',
@@ -5,21 +8,16 @@ const newUser = {
 };
 
 const Register = () => (
-  <div>
-    <form onSubmit={(e) => registerUser(e)}>
-      <fieldset>
-        <label htmlFor="email">Email</label>
-        <input type="text" id="email" onChange={(e) => updateUser(e)} name="email"/>
-      </fieldset>
-      <fieldset>
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" onChange={(e) => updateUser(e)}/>
-      </fieldset>
-      <div>
-        <button type="submit">Register</button>
+  <Layout>
+    <PageTitle pageTitle="Register"/>
+    <div className="row">
+      <div className="col-md" />
+      <div className="col-md">
+        <SignForm submitAction={registerUser} inputHandle={updateUser} buttonText="Register"/>
       </div>
-    </form>
-  </div>
+      <div className="col-md" />
+    </div>
+  </Layout>
 );
 
 const registerUser = async (e) => {
