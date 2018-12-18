@@ -13,7 +13,7 @@ const Register = () => (
     <div className="row">
       <div className="col-md" />
       <div className="col-md">
-        <SignForm submitAction={registerUser} inputHandle={updateUser} buttonText="Register"/>
+        <SignForm submitAction={registerUser} buttonText="Register"/>
       </div>
       <div className="col-md" />
     </div>

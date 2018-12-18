@@ -1,46 +1,59 @@
-import Router from 'next/router'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import Layout from '../components/common/layout';
 import SignForm from "../components/user/sign-form";
 import PageTitle from "../components/common/pageTitle";
+
+
+import {loginUser} from '../actions/auth-action';
 
 const user = {
   email: '',
   password: ''
 };
 
-const Login = () => (
-  <Layout>
-    <PageTitle pageTitle="Login"/>
-    <div className="row">
-      <div className="col-md" />
-      <div className="col-md">
-        <SignForm submitAction={loginUser} inputHandle={updateUser} buttonText="Login"/>
-      </div>
-      <div className="col-md" />
-    </div>
-  </Layout>
-);
+class Login extends Component {
+  constructor() {
+    super();
 
-const loginUser = async (e) => {
-  e.preventDefault();
-  const res = await fetch('/login', {
-    method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    body: JSON.stringify(user)
-  });
-
-  const loggedInUser = await res.json();
-
-  if (loggedInUser) {
-    Router.push('/all-spending')
+    this.login = this.login.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
+
+  updateUser(e) {
+    user[e.target.name] = e.target.value;
+  }
+
+  login(e) {
+    e.preventDefault();
+    this.props.loginUser(JSON.stringify(user));
+  }
+
+  render() {
+    return (
+      <Layout>
+        <PageTitle pageTitle="Login"/>
+        <div className="row">
+          <div className="col-md" />
+          <div className="col-md">
+            <SignForm submitAction={this.login} inputHandle={this.updateUser} buttonText="Login"/>
+          </div>
+          <div className="col-md" />
+        </div>
+      </Layout>
+    )
+  }
+}
+
+const matchDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+      loginUser: loginUser
+    },
+    dispatch
+  );
 };
 
-const updateUser = (e) => {
-  user[e.target.name] = e.target.value;
-};
 
-export default Login;
+export default connect(null, matchDispatchToProps)(Login);
