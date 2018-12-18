@@ -5,7 +5,7 @@ export const AuthReducer = (state = initialState, action) => {
     case 'AUTH_USER':
       return {
         ...state,
-        loggedIn: true,
+        token: action.payload.token,
         loggedInUserId: action.payload.userId
       };
     default:

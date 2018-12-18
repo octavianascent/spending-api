@@ -8,6 +8,4 @@ const AllSpending = () => (
   </Layout>
 );
 
-
-
 export default LoggedIn(AllSpending);

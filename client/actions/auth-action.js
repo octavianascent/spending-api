@@ -1,4 +1,5 @@
-import Router from 'next/router'
+import Router from 'next/router';
+import jsCookie from 'js-cookie';
 
 const setUser = (user) => {
   return {
@@ -19,6 +20,8 @@ export const loginUser = (user) => {
       });
 
       const loggedInUser = await res.json();
+
+      jsCookie.set('token', loggedInUser.token);
 
       dispatch(setUser(loggedInUser));
 

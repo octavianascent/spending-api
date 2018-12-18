@@ -6,5 +6,5 @@ import {AuthReducer} from '../reducers/auth-reducer';
 import {initialState} from '../utils/initial-state';
 
 export const initializeStore = (appInitialState = initialState) => {
-  return createStore(AuthReducer, appInitialState, composeWithDevTools(applyMiddleware(thunk)));
+  return createStore(AuthReducer, appInitialState, composeWithDevTools(applyMiddleware(thunk)))
 };

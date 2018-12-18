@@ -4,10 +4,17 @@ import {initializeStore} from '../store/store';
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
 
+let token = '';
+
+function getCookieValue(cookies, value) {
+  var b = cookies.match('(^|;)\\s*' + value + '\\s*=\\s*([^;]+)');
+  return b ? b.pop() : '';
+}
+
 function getOrCreateStore (initialState) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
-    return initializeStore(initialState)
+    return initializeStore(initialState);
   }
 
   // Create store if unavailable on the client and set it on the window object
@@ -20,6 +27,16 @@ function getOrCreateStore (initialState) {
 export default (App) => {
   return class AppWithRedux extends React.Component {
     static async getInitialProps (appContext) {
+
+      const req = appContext.ctx.req;
+
+      if (req && req.headers) {
+        const cookies = req.headers.cookie;
+        if (typeof cookies === 'string') {
+          token = getCookieValue(cookies, 'token');
+        }
+      }
+
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
       const reduxStore = getOrCreateStore();
@@ -34,13 +51,13 @@ export default (App) => {
 
       return {
         ...appProps,
-        initialReduxState: reduxStore.getState()
+        initialReduxState: {...reduxStore.getState(), token: token}
       }
     }
 
     constructor (props) {
       super(props);
-      this.reduxStore = getOrCreateStore(props.initialReduxState)
+      this.reduxStore = getOrCreateStore(props.initialReduxState);
     }
 
     render () {

@@ -13,7 +13,7 @@ export default LoggedInComponent => {
     }
 
     shouldNavigateAway() {
-      if (!this.props.loggedIn) {
+      if (!this.props.token) {
         Router.push('/login');
       }
     }
@@ -24,7 +24,7 @@ export default LoggedInComponent => {
   }
 
   const mapStateToProps = state => {
-    return {loggedIn: state.loggedIn}
+    return {token: state.token}
   };
 
   return connect(mapStateToProps, null)(ComposedComponent);
